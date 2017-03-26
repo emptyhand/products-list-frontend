@@ -1,16 +1,17 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Product } from "../entities/product";
 import { Http, Response, Headers } from "@angular/http";
-import { Observable } from "rxjs";
+import { Product } from "../entities/product";
 import { AuthService } from "../../auth/auth.service";
+import { environment } from "../../../environments/environment";
 
+import { Observable } from "rxjs";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProductService {
 
-  private baseUrl:string = 'http://localhost:8000/api';
+  private baseUrl:string;
 
   products: Array<Product> = [];
 
@@ -22,7 +23,9 @@ export class ProductService {
   constructor(
     private http: Http,
     private authService: AuthService
-  ) {}
+  ) {
+    this.baseUrl = environment.baseUrl;
+  }
 
   all(listId: number): Observable<Product[]> {
     return this.http

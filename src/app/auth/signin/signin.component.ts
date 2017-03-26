@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
     )
       .subscribe(
         res => {
-          return this.router.navigateByUrl('/');
+          return this.router.navigateByUrl('/shopping');
         },
         error => console.log(error),
       );

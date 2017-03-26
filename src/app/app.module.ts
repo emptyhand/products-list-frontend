@@ -21,6 +21,8 @@ import { ProductsListFormComponent } from './products/products-list/form/product
 import { ShoppingListDetailComponent } from './shopping/shopping-list-detail/shopping-list-detail.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import {AuthGuardService} from "./auth/auth-guard.service";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { SignupComponent } from './auth/signup/signup.component';
     ProductsListFormComponent,
     ShoppingListDetailComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { SignupComponent } from './auth/signup/signup.component';
   providers: [
     ProductService,
     ListService,
-    AuthService
+    AuthService,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })

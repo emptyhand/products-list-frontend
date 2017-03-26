@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from "./auth/auth.service";
 
 @Component({
@@ -6,20 +6,14 @@ import { AuthService } from "./auth/auth.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Products list';
+export class AppComponent implements OnInit {
 
-  private isLoggedIn: boolean;
-  private username: string;
+  private title = 'Products list';
 
   constructor(
     private authService: AuthService
-  ) {
-    this.isLoggedIn = authService.isLoggedIn;
-    this.username = authService.username;
-  }
+  ) {}
 
-  onLogout() {
-    this.authService.logout();
+  ngOnInit(): void {
   }
 }

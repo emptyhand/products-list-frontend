@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, Response } from "@angular/http";
+import { environment } from "../../environments/environment";
 
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/catch';
@@ -8,20 +9,23 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthService {
 
-  private baseUrl:string = 'http://localhost:8000/api';
-
   public token: string = null;
   public username: string;
-  public isLoggedIn: boolean = false;
+  public baseUrl: string;
 
   constructor(
     private http: Http
   ) {
+    this.baseUrl = environment.baseUrl;
     let user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      this.token = user && user.token;
-      this.isLoggedIn = true;
+      this.token = user.token;
+      this.username = user.username;
     }
+  }
+
+  isLoggedIn(): boolean {
+    return (this.token !== null);
   }
 
   /**
@@ -46,7 +50,7 @@ export class AuthService {
             token: this.token,
             username: this.username
           }));
-          return (this.isLoggedIn = true);
+          return true;
         } else {
           return false;
         }
@@ -60,13 +64,32 @@ export class AuthService {
    * @param password
    */
   register(email:string, password:string) {
-
+    return this.http.post(this.baseUrl + '/register',
+      JSON.stringify({
+        username: email,
+        password: password
+      }),
+      { headers: new Headers({ 'Content-Type': 'application/json' }) }
+    ).map(
+      (res: Response) => {
+        this.token = res.json() && res.json().token;
+        this.username = res.json() && res.json().username;
+        if (this.token) {
+          localStorage.setItem('user', JSON.stringify({
+            token: this.token,
+            username: this.username
+          }));
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
   }
 
   logout() {
     this.token = null;
     localStorage.removeItem('user');
-    this.isLoggedIn = false;
   }
 
 }

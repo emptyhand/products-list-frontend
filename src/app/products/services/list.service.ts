@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, Headers } from "@angular/http";
 import { AuthService } from "../../auth/auth.service";
 import { List } from "../entities/list";
+import { environment } from "../../../environments/environment";
 
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/catch';
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ListService {
 
-  private baseUrl:string = 'http://localhost:8000/api';
+  private baseUrl:string;
 
   lists: Array<List> = [];
 
@@ -22,7 +23,9 @@ export class ListService {
   constructor(
     private http: Http,
     private authService: AuthService
-  ) {}
+  ) {
+    this.baseUrl = environment.baseUrl;
+  }
 
   all(): Observable<List[]> {
     return this.http

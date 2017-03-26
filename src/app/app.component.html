@@ -11,14 +11,15 @@
       <a class="navbar-brand" href="/">{{ title }}</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul *ngIf="authService.isLoggedIn()" class="nav navbar-nav">
         <li routerLinkActive="active"><a [routerLink]="['/shopping']">Shopping</a></li>
         <li routerLinkActive="active"><a [routerLink]="['/products/lists']">Lists</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!isLoggedIn"><a [routerLink]="['/signin']">Login</a></li>
-        <li *ngIf="!isLoggedIn"><a [routerLink]="['/signup']">Register</a></li>
-        <li *ngIf="isLoggedIn"><a [routerLink]="['/signin']">Logout</a></li>
+        <li routerLinkActive="active" *ngIf="!authService.isLoggedIn()"><a [routerLink]="['/signin']">Login</a></li>
+        <li routerLinkActive="active" *ngIf="!authService.isLoggedIn()"><a [routerLink]="['/signup']">Register</a></li>
+        <li *ngIf="authService.isLoggedIn()"><a>{{ authService.username }}</a></li>
+        <li *ngIf="authService.isLoggedIn()"><a [routerLink]="['/signin']">Logout</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container-fluid -->
