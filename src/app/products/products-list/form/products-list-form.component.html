@@ -1,0 +1,27 @@
+<div class="well">
+  <form (ngSubmit)="onSubmit()" #listForm="ngForm">
+    <div class="form-group">
+      <label class="control-label" for="list-name">Name</label>
+      <input [(ngModel)]="list.name"
+             id="list-name" name="name"
+             class="form-control" required />
+    </div>
+    <button *ngIf="!list.id" class="btn btn-primary" type="submit">
+      Add
+    </button>
+    <button *ngIf="list.id" class="btn btn-success" type="submit">
+      Save
+    </button>
+    <a *ngIf="list.id" class="btn btn-info" [routerLink]="['/products/lists/' + list.id + '/items']">
+      Products ({{ list.count }})
+    </a>
+    <button (click)="onCancel()" *ngIf="list.id" class="btn btn-cancel" type="button">
+      Cancel
+    </button>
+    <div *ngIf="list.id && !list.count" class="pull-right clear-fix">
+      <button type="button" (click)="onDelete(list)" class="btn btn-danger">
+        Delete
+      </button>
+    </div>
+  </form>
+</div>

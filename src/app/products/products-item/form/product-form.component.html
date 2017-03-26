@@ -1,0 +1,27 @@
+<h1 class="page-header">
+  List "{{ list.name }}"
+</h1>
+
+<div class="well">
+  <p class="lead">Add products</p>
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="">Name</label>
+          <input [(ngModel)]="model.name" name="name" class="form-control" required />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="">Quantity</label>
+          <input [(ngModel)]="model.quantity" name="quantity" type="number" required class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="isNew" class="btn btn-primary" type="submit">Add</button>
+    <button *ngIf="!isNew" class="btn btn-success" type="submit">Save</button>
+    <button *ngIf="!isNew" (click)="onCancel()" class="btn btn-default" type="button">Cancel</button>
+  </form>
+</div>

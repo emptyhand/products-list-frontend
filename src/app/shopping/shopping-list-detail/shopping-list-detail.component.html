@@ -1,0 +1,18 @@
+<h1 class="page-header">
+  List "{{ list.name }}"
+</h1>
+<div *ngIf="!products.length" class="alert alert-info">No products added!</div>
+<ul class="list-group list-group-products">
+  <li class="list-group-item" *ngFor="let product of products">
+    <div class="checkbox">
+      <label [ngClass]="{ 'added': product.added }">
+        <input
+          name="product" #item
+          (click)="onClick(product, item.checked)"
+          type="checkbox"
+          [checked]="product.added" />
+        {{ product.name }} ({{ product.quantity }})
+      </label>
+    </div>
+  </li>
+</ul>

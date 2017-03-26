@@ -1,6 +1,6 @@
 import { BuyListPage } from './app.po';
 
-describe('buy-list App', function() {
+describe('buy-products-list App', function() {
   let page: BuyListPage;
 
   beforeEach(() => {

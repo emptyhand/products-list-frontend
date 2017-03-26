@@ -1,0 +1,14 @@
+<app-product-form [list]="list"></app-product-form>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let product of products">
+    <a [ngClass]="{added: product.added}" (click)="onSelect(product)">
+      {{ product.name }} ({{ product.quantity }})
+    </a>
+    <div class="pull-right clear-fix">
+      <button (click)="onDelete(product)" class="btn btn-xs btn-danger">
+        Delete
+      </button>
+    </div>
+  </li>
+</ul>

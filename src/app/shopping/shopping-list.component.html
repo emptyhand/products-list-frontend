@@ -1,0 +1,10 @@
+<h1 class="page-header">Lists</h1>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let list of lists">
+    <a [ngClass]="{completed: list.completed}"
+       [routerLink]="['/shopping/' + list.id]">
+      <span class="label label-info">{{ list.id }}</span> {{ list.name }}
+      <span class="pull-right">({{ list.count }})</span>
+    </a>
+  </li>
+</ul>

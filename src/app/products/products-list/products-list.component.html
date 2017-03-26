@@ -1,0 +1,13 @@
+<h1 class="page-header">Lists</h1>
+
+<app-products-list-form></app-products-list-form>
+
+<p>&nbsp;</p>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let list of lists">
+    <a (click)="onSelect(list)">
+      <span class="label label-info">{{ list.id }}</span> {{ list.name }} ({{ list.count }})
+    </a>
+  </li>
+</ul>
