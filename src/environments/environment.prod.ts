@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://pl.shar.lt/api'
+  baseUrl: 'https://shielded-bastion-65751.herokuapp.com/api'
 };
