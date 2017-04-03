@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { AuthService } from "./auth/auth.service";
 
 @Component({
@@ -9,6 +9,8 @@ import { AuthService } from "./auth/auth.service";
 export class AppComponent implements OnInit {
 
   private title = 'Products list';
+
+  isCollapsed: boolean = false;
 
   constructor(
     private authService: AuthService

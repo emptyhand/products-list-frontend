@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://shielded-bastion-65751.herokuapp.com/api'
+  baseUrl: 'http://localhost:8000/api'
 };

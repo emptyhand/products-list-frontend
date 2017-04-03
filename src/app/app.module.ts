@@ -21,8 +21,9 @@ import { ProductsListFormComponent } from './products/products-list/form/product
 import { ShoppingListDetailComponent } from './shopping/shopping-list-detail/shopping-list-detail.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import {AuthGuardService} from "./auth/auth-guard.service";
+import { AuthGuardService } from "./auth/auth-guard.service";
 import { HomeComponent } from './home/home.component';
+import { HttpService } from "./http.service";
 
 @NgModule({
   declarations: [
@@ -36,19 +37,20 @@ import { HomeComponent } from './home/home.component';
     ShoppingListDetailComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
   ],
   providers: [
     ProductService,
     ListService,
     AuthService,
     AuthGuardService,
+    HttpService,
   ],
   bootstrap: [AppComponent]
 })

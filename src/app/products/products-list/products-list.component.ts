@@ -14,7 +14,7 @@ export class ProductsListComponent implements OnInit {
   lists: Array<List> = [];
 
   constructor(
-    private listService: ListService
+    private listService: ListService,
   ) {
     this.listService.all()
       .subscribe(

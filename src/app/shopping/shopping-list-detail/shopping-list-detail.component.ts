@@ -22,7 +22,7 @@ export class ShoppingListDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private listService: ListService,
-    private productService: ProductService
+    private productService: ProductService,
   ) { }
 
   ngOnInit(): void {
@@ -35,12 +35,12 @@ export class ShoppingListDetailComponent implements OnInit, OnDestroy {
                 this.list = list;
               }
             );
-          this.productService.all(params['id'])
-            .subscribe(
-              (products: Product[]) => {
-                this.products = products;
-              }
-            );
+          // this.productService.all(params['id'])
+          //   .subscribe(
+          //     (products: Product[]) => {
+          //       this.products = products;
+          //     }
+          //   );
         }
       }
     );

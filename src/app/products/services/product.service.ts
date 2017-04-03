@@ -1,17 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Response, Headers } from "@angular/http";
+import { Response } from "@angular/http";
 import { Product } from "../entities/product";
-import { AuthService } from "../../auth/auth.service";
-import { environment } from "../../../environments/environment";
-
+import { HttpService } from "../../http.service";
 import { Observable } from "rxjs";
+
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProductService {
-
-  private baseUrl:string;
 
   products: Array<Product> = [];
 
@@ -21,25 +18,17 @@ export class ProductService {
   productSelected: EventEmitter<Product> = new EventEmitter<Product>();
 
   constructor(
-    private http: Http,
-    private authService: AuthService
-  ) {
-    this.baseUrl = environment.baseUrl;
-  }
+    private httpService: HttpService,
+  ) { }
 
   all(listId: number): Observable<Product[]> {
-    return this.http
-      .get(
-        this.baseUrl + '/lists/' + listId + '/products',
-        { headers: new Headers({ 'Authorization': 'Bearer ' + this.authService.token }) }
-      )
-      .map((res: Response) => res.json());
+    return this.httpService
+      .get('/lists/' + listId + '/products');
   }
 
   delete(listId:number, product: Product) {
-    this.http.delete(this.baseUrl + '/lists/' + listId + '/products/' + product.id,
-      { headers: new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.token }) }
-    )
+    this.httpService
+      .delete('/lists/' + listId + '/products/' + product.id)
       .subscribe(
         (res: Response) => {
           this.productsDeleted.emit(product);
@@ -48,11 +37,8 @@ export class ProductService {
   }
 
   add(listId:number, product: Product) {
-    this.http.post(this.baseUrl + '/lists/' + listId + '/products'  ,
-      JSON.stringify(product),
-      { headers: new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.token }) }
-    )
-      .map((res: Response) => res.json())
+    this.httpService
+      .post('/lists/' + listId + '/products', product)
       .subscribe(
         (product: Product) => {
           this.productsChanges.emit(product);
@@ -61,11 +47,8 @@ export class ProductService {
   }
 
   update(listId:number, product: Product) {
-    this.http.put(this.baseUrl + '/lists/' + listId + '/products/' + product.id,
-      JSON.stringify(product),
-      { headers: new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.token }) }
-    )
-      .map((res: Response) => res.json())
+    this.httpService
+      .put('/lists/' + listId + '/products/' + product.id, product)
       .subscribe(
         (updated: Product) => {
           this.productUpdated.emit(updated);
@@ -74,9 +57,8 @@ export class ProductService {
   }
 
   get(listId:number, id: number) {
-    return this.http.get(this.baseUrl + '/lists/' + listId + '/products/' + id,
-      { headers: new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.token }) }
-    ).map((res: Response) => res.json());
+    return this.httpService
+      .get('/lists/' + listId + '/products/' + id);
   }
 
   getTotalQuantity() {
@@ -86,5 +68,4 @@ export class ProductService {
     }
     return total;
   }
-
 }
