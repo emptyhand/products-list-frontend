@@ -5,10 +5,9 @@ import { List } from "../../entities/list";
 
 @Component({
   selector: 'app-product-form',
-  templateUrl: 'product-form.component.html',
-  styleUrls: ['product-form.component.css']
+  templateUrl: 'product-form.component.html'
 })
-export class ProductFormComponent implements OnInit, OnDestroy {
+export class ProductFormComponent implements OnInit {
 
   @Input()
   private model: Product = new Product(0, null, null, null, false);
@@ -31,21 +30,18 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
-  }
-
   onCancel() {
     this.model = new Product(0, null, null, null, false);
     this.isNew = true;
   }
 
   onSubmit() {
-    console.log(this.list);
     if (this.isNew) {
       this.productService.add(this.list.id, this.model);
-      this.model = new Product(0, null, null, null, false);
     } else {
       this.productService.update(this.list.id, this.model);
     }
+    this.isNew = true;
+    this.model = new Product(0, null, null, null, false);
   }
 }

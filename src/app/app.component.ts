@@ -1,5 +1,6 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit} from '@angular/core';
 import { AuthService } from "./auth/auth.service";
+import {HttpService} from "./http.service";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
   isCollapsed: boolean = false;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {

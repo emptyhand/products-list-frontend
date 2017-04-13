@@ -5,8 +5,7 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-products-list-form',
-  templateUrl: './products-list-form.component.html',
-  styleUrls: ['./products-list-form.component.css']
+  templateUrl: './products-list-form.component.html'
 })
 export class ProductsListFormComponent implements OnInit {
 

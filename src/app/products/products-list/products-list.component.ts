@@ -10,7 +10,6 @@ import { ListService } from "../services/list.service";
 })
 export class ProductsListComponent implements OnInit {
 
-  selectedList: List = new List(0, null);
   lists: Array<List> = [];
 
   constructor(
@@ -20,7 +19,6 @@ export class ProductsListComponent implements OnInit {
       .subscribe(
         lists => {
           this.lists = lists || [];
-          console.log(this.lists);
         }
       );
   }

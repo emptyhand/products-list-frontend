@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from "@angular/http";
-import { AuthService } from "./auth/auth.service";
 import { environment } from "../environments/environment";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
@@ -13,9 +12,10 @@ export class HttpService {
 
   private baseUrl: string;
 
+  public loading = false;
+
   constructor(
     private http: Http,
-    private authService: AuthService,
     private router: Router,
   ) {
     this.baseUrl = environment.baseUrl;
@@ -24,41 +24,70 @@ export class HttpService {
   private headers() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    if (this.authService.isLoggedIn()) {
-      headers.append('Authorization', 'Bearer ' + this.authService.token);
-    };
+
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      headers.append('Authorization', 'Bearer ' + user.token);
+    }
     return headers;
   }
 
-  get(url: string): Observable<any> {
-    return this.http.get(this.baseUrl + url, {
-      headers: this.headers()
-    })
-      .map((res: Response) => res.json())
-      .catch((err:any) =>{
-        // if token is expired
-        if (err.status == 401) {
-          return this.router.navigateByUrl('/signin');
+  private handleError(err: Response) {
+    if (err.status == 401) {
+      // redirect to login page if token is expired
+      return this.router.navigateByUrl('/signin');
+    }
+    return Observable.throw(err || 'Server error');
+  }
+
+  private process(obj: Observable<any>): Observable<any> {
+    return obj
+      .map(
+        (res: Response) => res.json()
+      )
+      .finally(
+        () => { this.loading = false; }
+      )
+      .catch(
+        (err: Response) => {
+          return this.handleError(err);
         }
-        return Observable.of(err);
-      });
+      );
+  }
+
+  get(url: string): Observable<any> {
+    this.loading = true;
+    return this.process(
+      this.http.get(this.baseUrl + url, {
+        headers: this.headers()
+      })
+    );
   }
 
   put(url: string, data): Observable<any> {
-    return this.http.put(this.baseUrl + url, JSON.stringify(data), {
+    this.loading = true;
+    return this.process(
+      this.http.put(this.baseUrl + url, JSON.stringify(data), {
         headers: this.headers()
-    }).map((res: Response) => res.json());
+      })
+    );
   }
 
   delete(url: string): Observable<any> {
-    return this.http.delete(this.baseUrl + url, {
+    this.loading = true;
+    return this.process(
+      this.http.delete(this.baseUrl + url, {
         headers: this.headers()
-    }).map((res: Response) => res.json());
+      })
+    );
   }
 
   post(url: string, data:any): Observable<any> {
-      return this.http.post(this.baseUrl + url, JSON.stringify(data), {
-          headers: this.headers()
-      }).map((res: Response) => res.json());
+    this.loading = true;
+    return this.process(
+      this.http.post(this.baseUrl + url, JSON.stringify(data), {
+        headers: this.headers()
+      })
+    );
   }
 }

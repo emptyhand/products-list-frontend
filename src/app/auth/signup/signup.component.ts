@@ -5,8 +5,7 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent implements OnInit {
 
@@ -23,11 +22,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.authService.register(
-      form.value.email,
-      form.value.password
-    ).subscribe(
-      res => this.router.navigateByUrl('/shopping')
-    );
+    this.authService.register(form.value.email, form.value.password);
   }
 }

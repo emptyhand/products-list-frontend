@@ -1,6 +1,9 @@
 <h2 class="page-header">Login</h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <div [ngClass]="{hidden: !error}" class="alert alert-danger">
+      {{ error }}
+    </div>
     <form (ngSubmit)="onLogin(f)" #f="ngForm">
       <div class="form-group">
         <label class="control-label" for="email">Mail</label>
@@ -19,8 +22,7 @@
                id="password"
                ngModel="" />
       </div>
-      <button
-        [disabled]="!f.valid"
+      <button [disabled]="!f.valid"
         class="btn btn-primary"
         type="submit">Sign In</button>
     </form>

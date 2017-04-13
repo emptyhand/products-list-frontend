@@ -48,9 +48,9 @@ import { HttpService } from "./http.service";
   providers: [
     ProductService,
     ListService,
+    HttpService,
     AuthService,
     AuthGuardService,
-    HttpService,
   ],
   bootstrap: [AppComponent]
 })

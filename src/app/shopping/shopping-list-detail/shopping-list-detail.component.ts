@@ -35,12 +35,12 @@ export class ShoppingListDetailComponent implements OnInit, OnDestroy {
                 this.list = list;
               }
             );
-          // this.productService.all(params['id'])
-          //   .subscribe(
-          //     (products: Product[]) => {
-          //       this.products = products;
-          //     }
-          //   );
+          this.productService.all(params['id'])
+            .subscribe(
+              (products: Product[]) => {
+                this.products = products;
+              }
+            );
         }
       }
     );
